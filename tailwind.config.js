@@ -5,6 +5,9 @@ module.exports = {
   },
   purge: ["./src/**/*.svelte"],
   theme: {
+    fontFamily: {
+      'spartan': ["Spartan", "san-serif"]
+    },
     extend: {},
   },
   variants: {},

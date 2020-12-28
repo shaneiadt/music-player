@@ -11,19 +11,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  font-family: Spartan, 'san-serif';
   font-size: 12px;
 }
 
-
-
 .img-container {
-
+  height: 300px;
+  width: 300px;
   position: relative;
   top: -50px;
-  left: 50px;
 }
-
 
 h2 {
   font-size: 25px;
