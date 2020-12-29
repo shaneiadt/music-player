@@ -6,3 +6,4 @@ Tech used:
 - TypeScript
 - Snowpack
 - Tailwinds
+- Vercel
