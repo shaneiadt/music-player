@@ -8,7 +8,11 @@ module.exports = {
     fontFamily: {
       'spartan': ["Spartan", "san-serif"]
     },
-    extend: {},
+    extend: {
+      inset: {
+        '-50': '-50px'
+      }
+    },
   },
   variants: {},
   plugins: [],
