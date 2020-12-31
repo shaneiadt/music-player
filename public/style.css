@@ -11,7 +11,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Spartan, 'san-serif';
+  font-family: Spartan, "san-serif";
   font-size: 12px;
 }
 
@@ -53,10 +53,7 @@ body {
   font-size: 30px;
   color: rgb(129, 129, 129);
   margin-right: 30px;
-
 }
-
-
 
 .main-button {
   font-size: 40px;
@@ -66,22 +63,7 @@ body {
 
 /* Media Query: iPhone (Vertical) */
 @media screen and (max-width: 376px) {
-
-
-  .img-container {
-    left: 29px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  h3 {
-    font-size: 15px;
-  }
-
-  .player-controls {
-    top: -10px;
-    left: 100px;
+  .player-container {
+    width: 95vw;
   }
 }

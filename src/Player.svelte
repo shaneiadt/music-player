@@ -1,5 +1,5 @@
 <div
-    class="player-container flex flex-col items-center shadow-lg rounded-xl bg-gray-100 w-auto h-auto px-8 pb-8">
+    class="player-container flex flex-col items-center shadow-lg rounded-xl bg-gray-100 w-auto h-auto px-1 px-8 pb-8">
     <div class="img-container relative -top-50 w-64 h-64">
         <img
             class="h-full object-cover shadow-md rounded-lg w-full"
