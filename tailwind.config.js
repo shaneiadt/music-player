@@ -10,7 +10,7 @@ module.exports = {
     },
     extend: {
       inset: {
-        '-50': '-50px'
+        '-25': '-25px'
       }
     },
   },
