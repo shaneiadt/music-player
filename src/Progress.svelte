@@ -1,7 +1,33 @@
 <script lang="typescript">
+    import { onMount } from "svelte";
     export let audio: HTMLAudioElement;
 
-    console.log(audio);
+    let progress: HTMLDivElement;
+    let currentTime = 0;
+    let trackDuration = "";
+
+    audio.addEventListener("timeupdate", (event) => {
+        setTrackData(event.target as HTMLAudioElement);
+    });
+
+    function setTrackData(track: HTMLAudioElement) {
+        const { duration, currentTime } = track;
+        const progressPercent = (currentTime / duration) * 100;
+        progress.style.width = `${progressPercent}%`;
+
+        const minutes = Math.floor(duration / 60);
+        let seconds = Math.floor(duration % 60);
+
+        if (seconds) {
+            trackDuration = `${minutes}:${
+                seconds < 10 ? `0${seconds}` : seconds
+            }`;
+        }
+    }
+
+    onMount(() => {
+        setTrackData(audio);
+    });
 </script>
 
 <style>
@@ -17,7 +43,7 @@
         background: #242323;
         border-radius: 5px;
         height: 100%;
-        width: 66%;
+        width: 0%;
         transition: width 0.1s linear;
     }
     .duration-wrapper {
@@ -29,9 +55,9 @@
 </style>
 
 <div class="progress-container" id="progress-container">
-    <div class="progress" id="progress" />
+    <div class="progress" id="progress" bind:this={progress} />
     <div class="duration-wrapper" id="duration-wrapper">
-        <span id="current-time">0:00</span>
-        <span id="duration">2:06</span>
+        <span id="current-time">{currentTime}</span>
+        <span id="duration">{trackDuration}</span>
     </div>
 </div>

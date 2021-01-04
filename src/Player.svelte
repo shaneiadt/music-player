@@ -29,10 +29,14 @@
     ];
 
     function prev() {
-        currentSongIndex = (currentSongIndex - 1 < 0) ? currentSongIndex : currentSongIndex - 1;
+        currentSongIndex =
+            currentSongIndex - 1 < 0 ? currentSongIndex : currentSongIndex - 1;
     }
     function next() {
-        currentSongIndex = (currentSongIndex + 1 >= songs.length) ? currentSongIndex : currentSongIndex + 1;
+        currentSongIndex =
+            currentSongIndex + 1 >= songs.length
+                ? currentSongIndex
+                : currentSongIndex + 1;
     }
 </script>
 
@@ -53,6 +57,8 @@
         src={`/assets/tracks/${songs[currentSongIndex]['name']}.mp3`}>
         <track kind="captions" />
     </audio>
-    <Progress {audio} />
-    <Controls {audio} on:prev={prev} on:next={next} />
+    {#if audio}
+        <Progress {audio} />
+        <Controls {audio} on:prev={prev} on:next={next} />
+    {/if}
 </div>
