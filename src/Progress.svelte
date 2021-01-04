@@ -1,3 +1,9 @@
+<script lang="typescript">
+    export let audio: HTMLAudioElement;
+
+    console.log(audio);
+</script>
+
 <style>
     .progress-container {
         background: #fff;

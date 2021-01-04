@@ -1,7 +1,10 @@
 <script lang="typescript">
+    import { createEventDispatcher } from "svelte";
     export let audio: HTMLAudioElement;
 
     let playBtn: HTMLElement;
+
+    const dispatch = createEventDispatcher();
 
     function playPause() {
         if (audio.paused) return play();
@@ -18,8 +21,10 @@
         playBtn.classList.replace("fa-pause", "fa-play");
         playBtn.setAttribute("title", "Play");
     }
-    function prev() {}
-    function next() {}
+    function prevNext(action: string) {
+        dispatch(action);
+        pause();
+    }
 </script>
 
 <style>
@@ -41,12 +46,20 @@
 </style>
 
 <div class="player-controls">
-    <i class="fas fa-backward" id="prev" title="Previous" on:click={prev} />
+    <i
+        class="fas fa-backward"
+        id="prev"
+        title="Previous"
+        on:click={() => prevNext('prev')} />
     <i
         class="fas fa-play main-button"
         bind:this={playBtn}
         id="play"
         title="Play"
         on:click={playPause} />
-    <i class="fas fa-forward" id="next" title="Next" on:click={next} />
+    <i
+        class="fas fa-forward"
+        id="next"
+        title="Next"
+        on:click={() => prevNext('next')} />
 </div>
