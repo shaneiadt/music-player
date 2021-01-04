@@ -1,6 +1,8 @@
 <script lang="typescript">
     import Progress from "./Progress.svelte";
     import Controls from "./Controls.svelte";
+
+    let audio: HTMLAudioElement;
 </script>
 
 <div
@@ -13,9 +15,9 @@
     </div>
     <h2 id="title" class="text-xl font-bold">Electric Chill Machine</h2>
     <h4 id="artist" class="text-lg">Jacinto</h4>
-    <audio src="/assets/tracks/jacinto-1.mp3">
+    <audio bind:this={audio} src="/assets/tracks/jacinto-1.mp3">
         <track kind="captions" />
     </audio>
     <Progress />
-    <Controls />
+    <Controls audio={audio} />
 </div>
