@@ -1,6 +1,8 @@
 <script lang="typescript">
-    import { onMount } from "svelte";
+    import { onMount, createEventDispatcher } from "svelte";
     export let audio: HTMLAudioElement;
+
+    const dispatch = createEventDispatcher();
 
     let progress: HTMLDivElement;
     let runningTime = "-";
@@ -12,7 +14,7 @@
 
     function setTrackData(track: HTMLAudioElement) {
         if (!progress) return;
-        
+
         const { duration, currentTime } = track;
         const progressPercent = (currentTime / duration) * 100;
         progress.style.width = `${progressPercent}%`;
@@ -25,7 +27,7 @@
                 seconds < 10 ? `0${seconds}` : seconds
             }`;
         }
-        
+
         const currentMins = Math.floor(currentTime / 60);
         let currentSecs = Math.floor(currentTime % 60);
 
@@ -34,6 +36,14 @@
                 currentSecs < 10 ? `0${currentSecs}` : currentSecs
             }`;
         }
+    }
+
+    function setProgressBar(e: MouseEvent) {
+        const { offsetX } = e;
+        const { clientWidth } = e.target as HTMLElement;
+        const { duration } = audio;
+
+        audio.currentTime = (offsetX / clientWidth) * duration;
     }
 
     onMount(() => {
@@ -65,7 +75,10 @@
     }
 </style>
 
-<div class="progress-container" id="progress-container">
+<div
+    class="progress-container"
+    id="progress-container"
+    on:click={setProgressBar}>
     <div class="progress" id="progress" bind:this={progress} />
     <div class="duration-wrapper" id="duration-wrapper">
         <span id="current-time">{runningTime}</span>
