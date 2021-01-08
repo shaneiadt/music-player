@@ -3,14 +3,16 @@
     export let audio: HTMLAudioElement;
 
     let progress: HTMLDivElement;
-    let currentTime = 0;
-    let trackDuration = "";
+    let runningTime = "-";
+    let trackDuration = "-";
 
     audio.addEventListener("timeupdate", (event) => {
         setTrackData(event.target as HTMLAudioElement);
     });
 
     function setTrackData(track: HTMLAudioElement) {
+        if (!progress) return;
+        
         const { duration, currentTime } = track;
         const progressPercent = (currentTime / duration) * 100;
         progress.style.width = `${progressPercent}%`;
@@ -21,6 +23,15 @@
         if (seconds) {
             trackDuration = `${minutes}:${
                 seconds < 10 ? `0${seconds}` : seconds
+            }`;
+        }
+        
+        const currentMins = Math.floor(currentTime / 60);
+        let currentSecs = Math.floor(currentTime % 60);
+
+        if (seconds) {
+            runningTime = `${currentMins}:${
+                currentSecs < 10 ? `0${currentSecs}` : currentSecs
             }`;
         }
     }
@@ -57,7 +68,7 @@
 <div class="progress-container" id="progress-container">
     <div class="progress" id="progress" bind:this={progress} />
     <div class="duration-wrapper" id="duration-wrapper">
-        <span id="current-time">{currentTime}</span>
+        <span id="current-time">{runningTime}</span>
         <span id="duration">{trackDuration}</span>
     </div>
 </div>

@@ -1,9 +1,11 @@
 <script lang="typescript">
+    import { tick } from "svelte";
     import Progress from "./Progress.svelte";
     import Controls from "./Controls.svelte";
 
     let audio: HTMLAudioElement;
     let currentSongIndex = 0;
+    let loaded = false;
 
     const songs = [
         {
@@ -29,14 +31,22 @@
     ];
 
     function prev() {
-        currentSongIndex =
-            currentSongIndex - 1 < 0 ? currentSongIndex : currentSongIndex - 1;
+        if (currentSongIndex - 1 >= 0) {
+            loaded = false;
+            currentSongIndex = currentSongIndex - 1;
+        }
     }
-    function next() {
+    async function next() {
+        loaded = false;
         currentSongIndex =
             currentSongIndex + 1 >= songs.length
                 ? currentSongIndex
                 : currentSongIndex + 1;
+        await tick();
+        audio.load();
+    }
+    function audioLoaded() {
+        loaded = true;
     }
 </script>
 
@@ -54,11 +64,14 @@
     <h4 id="artist" class="text-lg">{songs[currentSongIndex]['artist']}</h4>
     <audio
         bind:this={audio}
+        on:loadeddata={audioLoaded}
         src={`/assets/tracks/${songs[currentSongIndex]['name']}.mp3`}>
         <track kind="captions" />
     </audio>
-    {#if audio}
+    {#if loaded}
         <Progress {audio} />
         <Controls {audio} on:prev={prev} on:next={next} />
+    {:else}
+        <div class="animate-spin"><i class="fas fa-spinner" /></div>
     {/if}
 </div>
