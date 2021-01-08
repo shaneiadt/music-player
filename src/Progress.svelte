@@ -1,8 +1,6 @@
 <script lang="typescript">
-    import { onMount, createEventDispatcher } from "svelte";
+    import { onMount } from "svelte";
     export let audio: HTMLAudioElement;
-
-    const dispatch = createEventDispatcher();
 
     let progress: HTMLDivElement;
     let runningTime = "-";

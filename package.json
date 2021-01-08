@@ -5,6 +5,7 @@
     "ts-check": "svelte-check"
   },
   "dependencies": {
+    "@foobar404/wave": "^1.2.7",
     "svelte": "^3.24.0"
   },
   "devDependencies": {

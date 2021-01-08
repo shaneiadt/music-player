@@ -1,10 +1,17 @@
 <script lang="typescript">
     import { createEventDispatcher } from "svelte";
+    import Wave from "@foobar404/wave";
+
     export let audio: HTMLAudioElement;
 
     let playBtn: HTMLElement;
 
     const dispatch = createEventDispatcher();
+
+    //TODO: Go to next song when track ends
+    audio.addEventListener("ended", () => {
+        prevNext("next");
+    });
 
     function playPause() {
         if (audio.paused) return play();
@@ -15,6 +22,13 @@
         audio.play();
         playBtn.classList.replace("fa-play", "fa-pause");
         playBtn.setAttribute("title", "Pause");
+
+        let wave = new Wave();
+
+        wave.fromElement("track", "output", {
+            type: "bars blocks",
+            colors: ["#22194D",],
+        });
     }
     function pause() {
         audio.pause();
@@ -23,7 +37,6 @@
     }
     function prevNext(action: string) {
         dispatch(action);
-        pause();
     }
 </script>
 

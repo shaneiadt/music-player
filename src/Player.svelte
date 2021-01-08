@@ -44,6 +44,7 @@
                 : currentSongIndex + 1;
         await tick();
         audio.load();
+        audio.play();
     }
     function audioLoaded() {
         loaded = true;
@@ -65,6 +66,7 @@
     <audio
         bind:this={audio}
         on:loadeddata={audioLoaded}
+        id="track"
         src={`/assets/tracks/${songs[currentSongIndex]['name']}.mp3`}>
         <track kind="captions" />
     </audio>
