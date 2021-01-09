@@ -1,5 +1,5 @@
 <script lang="typescript">
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import Wave from "@foobar404/wave";
 
     export let audio: HTMLAudioElement;
@@ -8,10 +8,19 @@
 
     const dispatch = createEventDispatcher();
 
-    //TODO: Go to next song when track ends
     audio.addEventListener("ended", () => {
         prevNext("next");
     });
+
+    function togglePlayPause() {
+        if (playBtn.classList.contains("fa-play")) {
+            playBtn.classList.replace("fa-play", "fa-pause");
+            playBtn.setAttribute("title", "Pause");
+        } else {
+            playBtn.classList.replace("fa-pause", "fa-play");
+            playBtn.setAttribute("title", "Play");
+        }
+    }
 
     function playPause() {
         if (audio.paused) return play();
@@ -20,24 +29,41 @@
     }
     function play() {
         audio.play();
-        playBtn.classList.replace("fa-play", "fa-pause");
-        playBtn.setAttribute("title", "Pause");
-
-        let wave = new Wave();
-
-        wave.fromElement("track", "output", {
-            type: "bars blocks",
-            colors: ["#22194D",],
-        });
+        togglePlayPause();
+        addVisuals();
     }
     function pause() {
         audio.pause();
-        playBtn.classList.replace("fa-pause", "fa-play");
-        playBtn.setAttribute("title", "Play");
+        togglePlayPause();
     }
     function prevNext(action: string) {
-        dispatch(action);
+        dispatch(action, {
+            isPaused: audio.paused,
+        });
     }
+    function addVisuals() {
+        const canvas = document.createElement("canvas");
+        canvas.style.position = "absolute";
+        canvas.style.zIndex = "-1";
+        canvas.style.bottom = "0";
+        canvas.id = "output";
+        canvas.style.opacity = "0.3";
+        canvas.height = document.body.clientHeight;
+        canvas.width = document.body.clientWidth;
+
+        document.body.appendChild(canvas);
+
+        new Wave().fromElement("track", "output", {
+            type: "bars blocks",
+            colors: ["rgb(243, 182, 255)"],
+        });
+    }
+
+    onMount(() => {
+        if (!audio.paused && !playBtn.classList.contains("fa-pause")) {
+            togglePlayPause();
+        }
+    });
 </script>
 
 <style>
