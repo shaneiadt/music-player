@@ -17,7 +17,7 @@
     "@tsconfig/svelte": "^1.0.10",
     "@types/snowpack-env": "^2.3.0",
     "autoprefixer": "^10.0.1",
-    "postcss": "^8.1.6",
+    "postcss": "^8.2.13",
     "postcss-cli": "^8.2.0",
     "postcss-load-config": "^3.0.0",
     "prettier": "^2.1.2",
